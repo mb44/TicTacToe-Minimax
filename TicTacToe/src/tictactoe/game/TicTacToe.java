@@ -120,18 +120,8 @@ public class TicTacToe extends Observable {
 
     public boolean isLegalMove(int square) {
         int mask = 1;
-        if (player) {
-            mask <<= square;
-            if ((mask &= x | o) == 0) {
-                return true;
-            }
-            return false;
-        }
         mask <<= square;
-        if ((mask &= x | o) == 0) {
-            return true;
-        }
-        return false;
+	    return (mask &= x | o) == 0;
     }
 
     public void checkGameOver() {
@@ -173,7 +163,8 @@ public class TicTacToe extends Observable {
     public void printBoard() {
         for (int i=0; i<9; i++) {
             int mask = 1;
-            if ((x & (mask <<= i)) == mask) {
+            mask <<= i;
+            if ((x & mask) == mask) {
                 System.out.print("X ");
             } else if ((o & mask) == mask) {
                 System.out.print("O ");
@@ -191,7 +182,8 @@ public class TicTacToe extends Observable {
         int[] result = new int[9];
         for (int i=0; i<9; i++) {
             int mask = 1;
-            if ((x & (mask <<= i)) == mask) {
+            mask <<= i;
+            if ((x & mask) == mask) {
                 result[i] = 1;
             } else if ((o & mask) == mask) {
                 result[i] = 2;
@@ -207,9 +199,11 @@ public class TicTacToe extends Observable {
         for (int i=0; i<9; i++) {
             mask = 1;
             mask <<= i;
-            mask ^= board;
-            if (((mask >>= i) & 1) == 1) {
-                result[i] = true;
+            // Invert bits
+            mask = ~mask;
+            mask &= board;
+            if (mask == 0) {
+            	result[i] = true;
             }
         }
         return result;
@@ -229,7 +223,8 @@ public class TicTacToe extends Observable {
         StringBuilder res = new StringBuilder();
         for (int i=0; i<9; i++) {
             int mask = 1;
-            if ((x & (mask <<= i)) == mask) {
+            mask <<= i;
+            if ((x & mask) == mask) {
                 res.append("X");
             } else if ((o & mask) == mask) {
                 res.append("O");
