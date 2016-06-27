@@ -4,4 +4,4 @@ Tic Tac Toe with a perfect play AI (using Minimax). The AI evaluates all possibl
 See the image below for a UML class diagram (click the image for larger version)
 
 
-![Alt text](https://github.com/mb44/TicTacToe-Minimax/blob/master/TicTacToe.png?raw=true "Optional Title")
+![Alt text](https://github.com/mb44/TicTacToe-Minimax/blob/master/TicTacToe-class-diagram.png?raw=true "Optional Title")
