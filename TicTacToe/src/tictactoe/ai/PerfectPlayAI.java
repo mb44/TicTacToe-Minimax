@@ -42,17 +42,20 @@ public class PerfectPlayAI extends BaseAI {
                         result.depth = tempEval.depth;
                         result.score = tempEval.score;
                     } else if (tempEval.score == result.score && tempEval.depth < result.depth) {
+                    	result.bestMove = i;
                         result.depth = tempEval.depth;
                         result.score = tempEval.score;
                     }
-                } else if (tempEval.score < result.score) {
-                    result.bestMove = i;
-                    result.depth = tempEval.depth;
-                    result.score = tempEval.score;
-                } else if (tempEval.score == result.score && tempEval.depth < result.depth) {
-                    result.bestMove = i;
-                    result.depth = tempEval.depth;
-                    result.score = tempEval.score;
+                } else {
+                	if (tempEval.score < result.score) {
+	                    result.bestMove = i;
+	                    result.depth = tempEval.depth;
+	                    result.score = tempEval.score;
+                	} else if (tempEval.score == result.score && tempEval.depth < result.depth) {
+	                    result.bestMove = i;
+	                    result.depth = tempEval.depth;
+	                    result.score = tempEval.score;
+                	}
                 }
                 game.undoMove(i);
             }

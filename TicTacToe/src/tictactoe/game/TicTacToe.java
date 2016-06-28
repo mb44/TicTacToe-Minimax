@@ -18,7 +18,7 @@ import tictactoe.util.Observable;
  * Board index:            8   7  6  5  4 3 2 1 0
  * 
  * This LSB of x or o, respectively, correspond the upper left square. The bit to the left of the LSB
- * correspond the to the first row, second column
+ * corresponds the to the first row, second column
  * 0 1 2
  * 3 4 5
  * 6 7 8
@@ -78,10 +78,12 @@ public class TicTacToe extends Observable {
                 checkGameOver();
                 player = !player;
             }
-        } else if ((o & mask) == 0) {
-            o |= mask;
-            checkGameOver();
-            player = !player;
+        } else {
+        	if ((o & mask) == 0) {
+	            o |= mask;
+	            checkGameOver();
+	            player = !player;
+        	}
         }
         updateGameState();
     }
@@ -219,22 +221,6 @@ public class TicTacToe extends Observable {
         updateGameState();
     }
 
-    public String toString() {
-        StringBuilder res = new StringBuilder();
-        for (int i=0; i<9; i++) {
-            int mask = 1;
-            mask <<= i;
-            if ((x & mask) == mask) {
-                res.append("X");
-            } else if ((o & mask) == mask) {
-                res.append("O");
-            } else {
-                res.append("-");
-            }
-        }
-        return res.toString();
-    }
-
     public void put(String key, Node value) {
         table.put(key, value);
     }
@@ -251,5 +237,21 @@ public class TicTacToe extends Observable {
 
     public GameState getState() {
         return gameState;
+    }
+    
+    public String toString() {
+        StringBuilder res = new StringBuilder();
+        for (int i=0; i<9; i++) {
+            int mask = 1;
+            mask <<= i;
+            if ((x & mask) == mask) {
+                res.append("X");
+            } else if ((o & mask) == mask) {
+                res.append("O");
+            } else {
+                res.append("-");
+            }
+        }
+        return res.toString();
     }
 }
