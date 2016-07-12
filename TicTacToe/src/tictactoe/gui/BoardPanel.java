@@ -25,18 +25,18 @@ extends JPanel {
 
     public BoardPanel(TicTacToeGUI gui) {
         this.gui = gui;
-        this.cross = null;
-        this.nought = null;
+        cross = null;
+        nought = null;
         try {
         	// Use this to load the images from the file system
-        	cross = ImageIO.read(new File("C:\\src\\MyProjects\\TicTacToe\\cross.png"));
-            nought = ImageIO.read(new File("C:\\src\\MyProjects\\TicTacToe\\nought.png"));
+        	//cross = ImageIO.read(new File("C:\\src\\MyProjects\\TicTacToe\\cross.png"));
+            //nought = ImageIO.read(new File("C:\\src\\MyProjects\\TicTacToe\\nought.png"));
         	
             // Use this to load the images from a JAR file
-            //this.cross = ImageIO.read(this.getClass().getResource("/tictactoe/images/cross.png"));
-            //this.nought = ImageIO.read(this.getClass().getResource("/tictactoe/images/nought.png"));
+            cross = ImageIO.read(this.getClass().getResource("/ressources/cross.png"));
+            nought = ImageIO.read(this.getClass().getResource("/ressources/nought.png"));
         }
-        catch (IOException var2_2) {
+        catch (IOException e) {
         }
     }
 
@@ -60,21 +60,19 @@ extends JPanel {
     }
 
     private void paintBoard(Graphics g) {
-        int[] board = this.gui.getGameState().getBoard();
-        int i = 0;
-        while (i < board.length) {
+        int[] board = gui.getGameState().getBoard();
+        for (int i=0; i<board.length; i++) {
             int y;
             int x;
             if (board[i] == 1) {
                 x = i % 3 * 133 + 33;
                 y = i / 3 * 133 + 33;
-                g.drawImage(this.cross, x, y, null);
+                g.drawImage(cross, x, y, null);
             } else if (board[i] == 2) {
                 x = i % 3 * 133 + 33;
                 y = i / 3 * 133 + 33;
-                g.drawImage(this.nought, x, y, null);
+                g.drawImage(nought, x, y, null);
             }
-            ++i;
         }
     }
 
@@ -83,12 +81,12 @@ extends JPanel {
         g.setFont(new Font("Serif", 1, 44));
         int x = 80;
         int y = 150;
-        if (this.gui.getGameState().getGameOver()) {
-            if (this.gui.getGameState().getWinner() == -1) {
+        if (gui.getGameState().getGameOver()) {
+            if (gui.getGameState().getWinner() == -1) {
                 g.drawString("Computer Won!", x - 20, y);
-            } else if (this.gui.getGameState().getWinner() == 1) {
+            } else if (gui.getGameState().getWinner() == 1) {
                 g.drawString("You won!", x + 30, y);
-            } else if (this.gui.getGameState().getWinner() == 0) {
+            } else if (gui.getGameState().getWinner() == 0) {
                 g.drawString("No winner!", x + 20, y);
             }
         }

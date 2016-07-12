@@ -17,7 +17,7 @@ import tictactoe.util.Observable;
  * Bit (decimal value):  256 128 64 32 16 8 4 2 1
  * Board index:            8   7  6  5  4 3 2 1 0
  * 
- * This LSB of x or o, respectively, correspond the upper left square. The bit to the left of the LSB
+ * This LSB of x or o, respectively, corresponds the upper left square. The bit to the left of the LSB
  * corresponds the to the first row, second column
  * 0 1 2
  * 3 4 5
@@ -48,7 +48,7 @@ public class TicTacToe extends Observable {
         buildTranspositionTable();
     }
 
-    public void buildTranspositionTable() {
+    private void buildTranspositionTable() {
     	table = new Hashtable<>();
         int depth = 0;
         Node n = ai.minimax(depth);
@@ -62,7 +62,7 @@ public class TicTacToe extends Observable {
         }
         int move = ai.move();
         applyMove(move);
-        checkGameOver();
+        updateGameOver();
         updateGameState();
     }
 
@@ -75,13 +75,13 @@ public class TicTacToe extends Observable {
         if (player) {
             if ((x & mask) == 0) {
                 x |= mask;
-                checkGameOver();
+                updateGameOver();
                 player = !player;
             }
         } else {
         	if ((o & mask) == 0) {
 	            o |= mask;
-	            checkGameOver();
+	            updateGameOver();
 	            player = !player;
         	}
         }
@@ -126,7 +126,7 @@ public class TicTacToe extends Observable {
 	    return (mask &= x | o) == 0;
     }
 
-    public void checkGameOver() {
+    public void updateGameOver() {
         int row1 = 7;
         int row2 = 56;
         int row3 = 448;
@@ -180,6 +180,9 @@ public class TicTacToe extends Observable {
             System.out.println();
     }
 
+    /**
+     * @return an array representation of board. 0: no piece. 1: cross. 2: nought.
+     */
     public int[] getBoard() {
         int[] result = new int[9];
         for (int i=0; i<9; i++) {
@@ -232,7 +235,9 @@ public class TicTacToe extends Observable {
     private void updateGameState() {
         gameState.setBoard(getBoard());
         gameState.setWinner(getWinner());
+        gameState.setPlayerTurn(player);
         gameState.setGameOver(isGameOver());
+        notifyObservers();
     }
 
     public GameState getState() {

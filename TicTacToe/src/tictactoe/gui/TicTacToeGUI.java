@@ -39,6 +39,7 @@ implements ObserverBase {
         registerEventHandlers();
         addComponentsToFrame();
         pack();
+        setVisible(true);
     }
 
     private void createComponents() {
@@ -107,7 +108,7 @@ implements ObserverBase {
 
         @Override
         public void mouseReleased(MouseEvent event) {
-            if (!game.isGameOver() && game.getTurn()) {
+            if (!gameState.getGameOver() && gameState.getPlayerTurn()) {
             	// Human move
                 int x = event.getX();
                 int y = event.getY();
@@ -117,17 +118,17 @@ implements ObserverBase {
                 if (game.isLegalMove(index)) {
                     game.applyMove(index);
                     board.repaint();
-                    if (game.isGameOver()) {
+                    if (gameState.getGameOver()) {
                         buttonStart.setText("Restart");
                     }
                 }
                 
                 // AI move
-                if (!game.isGameOver() && !game.getTurn()) {
+                if (!gameState.getGameOver() && !gameState.getPlayerTurn()) {
                 	game.moveAI();
                 }
                 board.repaint();
-                if (game.isGameOver()) {
+                if (gameState.getGameOver()) {
                     buttonStart.setText("Restart");
                 }
             }

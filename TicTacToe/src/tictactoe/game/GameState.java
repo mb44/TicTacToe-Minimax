@@ -5,6 +5,7 @@ package tictactoe.game;
 
 public class GameState {
     private int[] board;
+    private boolean playerTurn;
     private boolean gameOver;
     private int winner;
 
@@ -13,12 +14,17 @@ public class GameState {
         for (int i=0; i<board.length; i++) {
             this.board[i] = 0;
         }
+        playerTurn = true;
         this.gameOver = false;
         this.winner = 0;
     }
 
     public int[] getBoard() {
         return board;
+    }
+    
+    public boolean getPlayerTurn() {
+    	return playerTurn;
     }
 
     public boolean getGameOver() {
@@ -30,7 +36,11 @@ public class GameState {
     }
 
     public void setBoard(int[] board) {
-        this.board = board;
+    	this.board = board;
+    }
+    
+    public void setPlayerTurn(boolean playerTurn) {
+    	this.playerTurn = playerTurn;
     }
 
     public void setGameOver(boolean gameOver) {

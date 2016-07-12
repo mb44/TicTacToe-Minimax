@@ -5,11 +5,12 @@ package tictactoe.gui;
 
 import tictactoe.game.TicTacToe;
 import tictactoe.gui.TicTacToeGUI;
+import tictactoe.util.ObserverBase;
 
 public class Game {
     public static void main(String[] args) {
     	TicTacToe game = new TicTacToe();
-        TicTacToeGUI gui = new TicTacToeGUI(game);
-        gui.setVisible(true);
+        ObserverBase gui = new TicTacToeGUI(game);
+        game.add(gui);
     }
 }
