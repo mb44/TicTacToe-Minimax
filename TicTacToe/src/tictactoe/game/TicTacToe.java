@@ -38,6 +38,7 @@ public class TicTacToe extends Observable {
     private PerfectPlayAI ai;
     private int x;
     private int o;
+    // if player==true it's player1s turn, and if player==false it's player2s (computers) turn
     private boolean player;
     private boolean gameOver;
     private int winner;
@@ -72,12 +73,14 @@ public class TicTacToe extends Observable {
         }
         int mask = 1;
         mask <<= square;
+        // Player1s turn
         if (player) {
             if ((x & mask) == 0) {
                 x |= mask;
                 updateGameOver();
                 player = !player;
             }
+        // Player2s turn
         } else {
         	if ((o & mask) == 0) {
 	            o |= mask;
@@ -90,6 +93,7 @@ public class TicTacToe extends Observable {
 
     public void undoMove(int square) {
         int mask = 1;
+        // it's player2s turn, meaning we have do indo player1s move
         if (!player) {
         	mask <<= square;
             if ((mask&x) > 0) {
@@ -103,18 +107,19 @@ public class TicTacToe extends Observable {
                 winner = 0;
                 player = !player;
             }
+        // it's player1s turn, meaning we have do indo player2s move
         } else {
         	mask <<= square;
             if ((mask&o) > 0) {
-	            mask = 1;
-	            mask <<= square;
+	        mask = 1;
+	        mask <<= square;
                 // Invert bits
                 mask = ~mask;
                 // Unset bit
                 o = o & mask;
-	            gameOver = false;
-	            winner = 0;
-	            player = !player;
+	        gameOver = false;
+	        winner = 0;
+	        player = !player;
             }
         }
         updateGameState();
@@ -123,7 +128,7 @@ public class TicTacToe extends Observable {
     public boolean isLegalMove(int square) {
         int mask = 1;
         mask <<= square;
-	    return (mask &= x | o) == 0;
+	return (mask &= x | o) == 0;
     }
 
     public void updateGameOver() {
