@@ -24,7 +24,7 @@ import tictactoe.util.Observable;
  * 6 7 8
  * 
  * Example:
- * x = 48; means that there are crosses at board indices 4 and 5:
+ * x = 48; means that there are crosses at board indices 4 and 5 (16+32=48):
  * - - -
  * - X X
  * - - -
@@ -93,7 +93,7 @@ public class TicTacToe extends Observable {
 
     public void undoMove(int square) {
         int mask = 1;
-        // it's player2s turn, meaning we have do indo player1s move
+        // it's player2s turn, meaning we have do undo player1s move
         if (!player) {
         	mask <<= square;
             if ((mask&x) > 0) {
@@ -107,7 +107,7 @@ public class TicTacToe extends Observable {
                 winner = 0;
                 player = !player;
             }
-        // it's player1s turn, meaning we have do indo player2s move
+        // it's player1s turn, meaning we have do undo player2s move
         } else {
         	mask <<= square;
             if ((mask&o) > 0) {
